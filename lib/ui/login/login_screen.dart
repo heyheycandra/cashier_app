@@ -136,36 +136,6 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.8,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              //       CustomPaint(
-              //         size: Size(
-              //           MediaQuery.of(context).size.width,
-              //           MediaQuery.of(context).size.height * 0.2,
-              //         ),
-              //         painter: DrawTriangleShape(color: cashierAccent),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height * 0.83,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: [
-              //       CustomPaint(
-              //         size: Size(
-              //           MediaQuery.of(context).size.width,
-              //           MediaQuery.of(context).size.height * 0.2,
-              //         ),
-              //         painter: DrawTriangleShape(color: cashierPrimary),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               Positioned(
                 bottom: 0,
                 child: Container(
@@ -261,8 +231,7 @@ class _LoginBodyState extends State<LoginBody> with TickerProviderStateMixin {
                                     child: ButtonConfirm(
                                       text: "Login",
                                       onTap: () {
-                                        // TODO: REPLACE BLOC
-                                        locator<NavigatorService>().navigateReplaceTo(Constant.MENU_DASHBOARD);
+                                        bloc.add(LoginUser(user: model));
                                       },
                                     ),
                                   );

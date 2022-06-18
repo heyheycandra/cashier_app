@@ -29,18 +29,18 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             emit(LoginComplete());
           } else if (event is CheckUser) {
             User? loginModel = await biscuit.getUser();
-            if (loginModel != null && loginModel.token != null) {
-              blocUser = await getActualUser(loginModel.token!);
+            if (loginModel != null && loginModel.accessToken != null) {
+              blocUser = await getActualUser(loginModel.accessToken!);
               emit(UserLoaded(blocUser));
             } else {
               throw InvalidSessionExpression("There are no biscuits in this app");
             }
           } else if (event is UpdateUser) {
             User? loginModel = await biscuit.getUser();
-            if (loginModel != null && loginModel.token != null) {
-              var response = await api.updateProfile(token: loginModel.token ?? "", body: event.model.toUpdateProfile()) as Map<String, dynamic>;
+            if (loginModel != null && loginModel.accessToken != null) {
+              var response = await api.updateProfile(token: loginModel.accessToken ?? "", body: event.model.toMap()) as Map<String, dynamic>;
               var user = User.map(response['data']);
-              user.token = loginModel.token;
+              user.accessToken = loginModel.accessToken;
               biscuit.saveUser(user);
               emit(UpdateComplete(response['message'], user));
             } else {
@@ -48,8 +48,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             }
           } else if (event is UpdatePass) {
             User? loginModel = await biscuit.getUser();
-            if (loginModel != null && loginModel.token != null) {
-              var response = await api.updatePassword(token: loginModel.token ?? "", body: {
+            if (loginModel != null && loginModel.accessToken != null) {
+              var response = await api.updatePassword(token: loginModel.accessToken ?? "", body: {
                 'user_id': (loginModel.id ?? "").toString(),
                 'password': event.pass,
                 'password_confirmation': event.confirmPass,
@@ -60,9 +60,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             }
           } else if (event is DoLogoutUser) {
             User? loginModel = await biscuit.getUser();
-            if (loginModel != null && loginModel.token != null) {
+            if (loginModel != null && loginModel.accessToken != null) {
               await api.logout(
-                token: loginModel.token ?? "",
+                token: loginModel.accessToken ?? "",
                 body: {
                   'user_id': (loginModel.id ?? "").toString(),
                 },
@@ -99,7 +99,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     String token = loginResponse['token'];
     var userResponse = await api.getUser(token: 'Bearer $token') as Map<String, dynamic>;
     blocUser = User.map(userResponse);
-    blocUser.token = 'Bearer $token';
+    blocUser.accessToken = 'Bearer $token';
   }
 
   Future<User> getActualUser(String token) async {

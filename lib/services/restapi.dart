@@ -5,9 +5,9 @@ import 'package:flutter/foundation.dart';
 
 class RestApi extends UrlApi {
   final NetworkUtil _util = NetworkUtil();
-  Future<dynamic> register({required Map<String, String> body}) {
+  Future<dynamic> register({required Map<String, dynamic> body}) {
     return _util
-        .formPost(auth + '/register',
+        .post(auth + '/signup',
             headers: {
               // 'accept': 'aplication/json',
               'accept': '*/*',
@@ -23,9 +23,9 @@ class RestApi extends UrlApi {
     });
   }
 
-  Future<dynamic> login({required Map<String, String> body}) {
+  Future<dynamic> login({required Map<String, dynamic> body}) {
     return _util
-        .formPost(auth + '/login',
+        .post(auth + '/signin',
             headers: {
               'accept': 'aplication/json',
               // 'accept': '*/*',
@@ -41,9 +41,9 @@ class RestApi extends UrlApi {
     });
   }
 
-  Future<dynamic> logout({required Map<String, String> body, required String token}) {
+  Future<dynamic> logout({required Map<String, dynamic> body, required String token}) {
     return _util
-        .formPost(auth + '/logout',
+        .post(auth + '/logout',
             headers: {
               'accept': 'aplication/json',
               // 'accept': '*/*',
@@ -80,10 +80,10 @@ class RestApi extends UrlApi {
 
   Future<dynamic> addTransaction({
     required String token,
-    required Map<String, String> body,
+    required Map<String, dynamic> body,
   }) {
     return _util
-        .formPost(
+        .post(
       transaction + '/tambah',
       headers: {
         'accept': 'aplication/json',
@@ -125,10 +125,10 @@ class RestApi extends UrlApi {
 
   Future<dynamic> activeTransactions({
     required String token,
-    required Map<String, String> body,
+    required Map<String, dynamic> body,
   }) {
     return _util
-        .formPost(
+        .post(
       transaction + '/tiket-aktif',
       headers: {
         'accept': 'aplication/json',
@@ -170,10 +170,10 @@ class RestApi extends UrlApi {
 
   Future<dynamic> updateProfile({
     required String token,
-    required Map<String, String> body,
+    required Map<String, dynamic> body,
   }) {
     return _util
-        .formPost(auth + '/update-profile',
+        .post(auth + '/update-profile',
             headers: {
               // 'accept': 'aplication/json',
               'accept': '*/*',
@@ -192,10 +192,10 @@ class RestApi extends UrlApi {
 
   Future<dynamic> updatePassword({
     required String token,
-    required Map<String, String> body,
+    required Map<String, dynamic> body,
   }) {
     return _util
-        .formPost(auth + '/change-password',
+        .post(auth + '/change-password',
             headers: {
               // 'accept': 'aplication/json',
               'accept': '*/*',
@@ -251,9 +251,9 @@ class RestApi extends UrlApi {
     });
   }
 
-  Future<dynamic> payLater({required String token, required Map<String, String> body}) {
+  Future<dynamic> payLater({required String token, required Map<String, dynamic> body}) {
     return _util
-        .formPost(
+        .post(
       transaction + '/paylater',
       headers: {
         // 'accept': 'aplication/json',
